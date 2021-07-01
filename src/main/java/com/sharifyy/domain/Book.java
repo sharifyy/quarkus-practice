@@ -6,7 +6,7 @@ import java.util.List;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
-@EqualsAndHashCode
+@EqualsAndHashCode(of = "isbn")
 public class Book {
     private final String title;
     private final String publisher;

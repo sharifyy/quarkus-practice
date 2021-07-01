@@ -30,17 +30,22 @@ public class BookService {
 
     public void deleteBook(String isbn) {
         availableBooks.stream()
-                .filter(book -> book.getIsbn().equals(isbn.toLowerCase()))
-                .findFirst().ifPresent(book -> availableBooks.remove(book));
+                .filter(book -> book.getIsbn().equals(isbn))
+                .findFirst()
+                .ifPresent(book -> availableBooks.remove(book));
     }
 
     public Book editBook(String isbn,Book aBook) {
         return availableBooks.stream()
                 .filter(book -> book.getIsbn().equals(isbn))
                 .findFirst()
-                .map(book -> {
-                    Book.of(aBook.getTitle(), aBook.getPublisher(), aBook.getAuthors(), aBook.getIsbn());
-                    return aBook;
-                }).orElseThrow(() -> new NotFoundException("book not found"));
+                .map(book -> updateBook(aBook, book))
+                .orElseThrow(() -> new NotFoundException("book not found"));
+    }
+
+    private Book updateBook(Book aBook, Book book) {
+        availableBooks.remove(book);
+        availableBooks.add(aBook);
+        return aBook;
     }
 }

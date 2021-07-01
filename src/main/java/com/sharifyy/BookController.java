@@ -7,6 +7,7 @@ import org.jboss.resteasy.annotations.jaxrs.PathParam;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,20 +37,24 @@ public class BookController {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Book createBook(BookRequestModel aBook) {
-        return bookService.addBook(Book.of(
-                aBook.getTitle(),
-                aBook.getPublisher(),
-                aBook.getAuthors().stream().map(author->Author.of(author.getName())).collect(Collectors.toList()),
-                aBook.getIsbn())
-        );
+    public Response createBook(BookRequestModel aBook) {
+        return Response.status(Response.Status.CREATED).entity(
+                bookService.addBook(
+                        Book.of(
+                                aBook.getTitle(),
+                                aBook.getPublisher(),
+                                aBook.getAuthors().stream().map(author -> Author.of(author.getName())).collect(Collectors.toList()),
+                                aBook.getIsbn())
+                )).build();
+
     }
 
     @DELETE
     @Path("/{title}")
     @Produces(MediaType.APPLICATION_JSON)
-    public void deleteBookByIsbn(@PathParam String isbn) {
+    public Response deleteBookByIsbn(@PathParam String isbn) {
         bookService.deleteBook(isbn);
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
 
     @PUT
@@ -60,7 +65,7 @@ public class BookController {
         return bookService.editBook(isbn, Book.of(
                 book.getTitle(),
                 book.getPublisher(),
-                book.getAuthors().stream().map(author->Author.of(author.getName())).collect(Collectors.toList()),
+                book.getAuthors().stream().map(author -> Author.of(author.getName())).collect(Collectors.toList()),
                 book.getIsbn())
         );
     }

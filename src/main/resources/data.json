@@ -1,0 +1,28 @@
+{
+  "book_1": {
+    "title": "Modern Java In Action",
+    "publisher": "Manning",
+    "authors": [
+      {
+        "name": "Mario Fusco"
+      },
+      {
+        "name": "Raoul-Gabriel Urma"
+      },
+      {
+        "name": "Alan Mycroft"
+      }
+    ],
+    "isbn": "9781617293566"
+  },
+  "book_2": {
+    "authors": [
+      {
+        "name": "Martin Fowler"
+      }
+    ],
+    "isbn": "978-0-13-475759-9",
+    "publisher": "Addison Wesley",
+    "title": "Refactoring Improving the Design of Existing Code"
+  }
+}
